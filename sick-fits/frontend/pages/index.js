@@ -1,12 +1,7 @@
-import React, { Component } from 'react'
-import Link from 'next/link'
+const Home = () => (
+  <div>
+    <p>Home</p>
+  </div>
+);
 
-export default class Index extends Component {
-  render() {
-    return (
-      <div>
-        <p>Hello</p>
-      </div>
-    )
-  }
-}
+export default Home;

@@ -1,4 +1,4 @@
-import Nav from './Nav'
+import Nav from "./Nav";
 
 const Header = () => (
   <div>
@@ -8,9 +8,9 @@ const Header = () => (
     </div>
     <div className="sub-bar">
       <p>Search</p>
-      <div>Cart</div>
     </div>
+    <div>Cart</div>
   </div>
-)
+);
 
 export default Header;

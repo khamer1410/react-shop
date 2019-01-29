@@ -1,12 +1,7 @@
-import React, { Component } from 'react'
-import Link from 'next/link'
+const Sell = () => (
+  <div>
+    <p>Sell me</p>
+  </div>
+);
 
-export default class Sell extends Component {
-  render() {
-    return (
-      <div>
-        <p>Hello</p>
-      </div>
-    )
-  }
-}
+export default Sell;
