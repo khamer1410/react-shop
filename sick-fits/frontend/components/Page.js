@@ -46,7 +46,7 @@ const StyledPage = styled.div`
   color: ${({theme}) => theme.black};
 `;
 
-const Inner = styled.div`
+const Container = styled.div`
   max-width: ${({theme}) => theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
@@ -59,7 +59,7 @@ export default class Page extends Component {
         <StyledPage>
           <Meta />
           <Header />
-          <Inner>{this.props.children}</Inner>
+          <Container>{this.props.children}</Container>
         </StyledPage>
      </ThemeProvider>
     );
