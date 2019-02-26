@@ -11,7 +11,7 @@ const Mutations = {
       info
     );
 
-    return item;1
+    return item;
   },
 
   updateItem(parent, args, ctx, info) {
