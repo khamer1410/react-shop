@@ -62,7 +62,38 @@ const Mutations = {
     });
 
     return user
+  },
+
+
+  async signin(parent, args, ctx, info) {
+    const { email, password } = args;
+
+    const user = await ctx.db.query.user({where: {email}});
+
+    if (!user) {
+      throw new Error(`No user found for email: ${email}`)
+    }
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new Error('Wrong password!')
+    }
+
+    logUser(user.id, ctx)
+
+    return user
   }
 };
+
+function logUser(userId, ctx) {
+    // create JWT to auto log in
+    const token = jwt.sign({userId}, process.env.APP_SECRET)
+
+    // set the jwt into cookie res
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAges: 1000 * 60 * 60 *24 * 365, // 1 year
+    });
+}
 
 module.exports = Mutations;
