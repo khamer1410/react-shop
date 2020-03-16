@@ -82,7 +82,12 @@ const Mutations = {
     logUser(user.id, ctx)
 
     return user
-  }
+  },
+
+  singout(parent, args, ctx, info) {
+    ctx.response.clearCookie('token')
+    return {message: 'Goodbye!'}
+  },
 };
 
 function logUser(userId, ctx) {
