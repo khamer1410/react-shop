@@ -7,10 +7,19 @@ const {transport, generateTemplate} = require('../mail')
 const Mutations = {
   async createItem(parent, args, ctx, info) {
     // TODO check is user logged
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that');
+    }
 
     const item = await ctx.db.mutation.createItem(
       {
         data: {
+          // creating relationship between item => user
+          user: {
+            connect: {
+              id: ctx.request.userId,
+            }
+          },
           ...args
         }
       },
