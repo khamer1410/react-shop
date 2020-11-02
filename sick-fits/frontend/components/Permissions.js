@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Error from "./ErrorMessage";
@@ -40,14 +41,14 @@ const Permissions = () => (
                 <th>Name</th>
                 <th>Email</th>
                 {PERMISSIONS.map((permission) => (
-                  <th>{permission}</th>
+                  <th key={permission}>{permission}</th>
                 ))}
                 <th>👇</th>
               </tr>
             </thead>
             <tbody>
               {data.users.map((user) => (
-                <UserRow user={user} />
+                <UserRow user={user} key={user.id}/>
               ))}
             </tbody>
           </Table>
@@ -58,23 +59,37 @@ const Permissions = () => (
 );
 
 const UserRow = ({ user = {} }) => {
+  const [permissions, setPermissions] = useState(user.permissions);
+
+  const handlePermissionChange = e => {
+    const checkbox = e.target;
+    let updatedPermissions = [...permissions];
+
+    if (checkbox.checked) {
+      updatedPermissions.push(checkbox.value)
+    } else {
+      updatedPermissions = updatedPermissions.filter(permission => permission !== checkbox.value)
+    }
+
+    setPermissions(updatedPermissions)
+  }
+
   return (
     <tr>
       <td>{user.name}</td>
       <td>{user.email}</td>
       {PERMISSIONS.map((permissionToCheck) => {
-        const hasPermission = user.permissions.find(
-          (perm) => perm === permissionToCheck
-        );
+        const hasPermission = permissions.includes(permissionToCheck);
         const fieldName = `${user.id}-permission-${permissionToCheck}`
         return (
-          <td>
+          <td key={fieldName}>
             <label htmlFor={fieldName}>
               <input
+                value={permissionToCheck}
                 type="checkbox"
                 name={fieldName}
-                id=""
                 checked={hasPermission}
+                onChange={handlePermissionChange}
               />
             </label>
           </td>
@@ -86,5 +101,7 @@ const UserRow = ({ user = {} }) => {
     </tr>
   );
 };
+
+
 
 export default Permissions;
